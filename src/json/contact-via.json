@@ -1,0 +1,14 @@
+[
+    {
+      "value" : "by-email",
+      "name": "By Email"
+    },
+    {
+      "value" : "by-phone-call",
+      "name": "By phone-call"
+    },
+    {
+      "value" : "via-SMS",
+      "name": "Via SMS"  
+    }
+]

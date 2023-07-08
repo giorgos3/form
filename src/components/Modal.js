@@ -1,36 +1,52 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import Modal from 'react-bootstrap/Modal';
+import { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { Context } from './context';
 
-const showModal = () => {
+
+const Dialog = (props) => {
+
+	const {visible, messages ,item} = props.data;
+
+	const [data, setData] = useContext(Context);
+	
+
+	const [show, setShow] = useState(visible);
+
+	const handleClose = () => setShow(false);
+
+	const removeItem = () => {
+
+		setData(data => data.filter(function(i) {
+			return i !== item
+		}))
+
+    setShow(false);
+
+	}
+
 return (
-	<div style={{ display: 'block',
-				width: 700,
-				padding: 30 }}>
-	<h4>React-Bootstrap Modal Component</h4>
-	<Modal.Dialog>
-		<Modal.Header closeButton>
-		<Modal.Title>
-		Sample Modal Heading
-		</Modal.Title>
-		</Modal.Header>
-		<Modal.Body>
-		<p>
-		This is the sample text for our Modal
-		</p>
-		</Modal.Body>
-		<Modal.Footer>
-		<Button variant="primary">
-		Save changes
-		</Button>
-		<Button variant="secondary">
-		Close
-		</Button>
-		</Modal.Footer>
-	</Modal.Dialog>
-	</div>
-);
+	<Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{messages.header}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+		{messages.title}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+		  {messages.buttons.cancel}
+          </Button>
+          <Button variant="primary" onClick={removeItem}>{messages.buttons.confirm}</Button>
+        </Modal.Footer>
+      </Modal>
+  
+  );
 }
 
-export default showModal;
+export default Dialog;

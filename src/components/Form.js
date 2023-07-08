@@ -1,227 +1,147 @@
 import { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+import { Context } from './context';
 import {Form, Button} from 'react-bootstrap';
-import showModal from './Modal'
-
-
+import Input from './Input';
+import Checkbox from './Checkbox'
+import Table from './Table'
+import inputsData from '../json/inputsData.json';
+import contact_via from '../json/contact-via.json';
 
 const FormInfo = () => {
 
+  const [values, setValues] = useState(
+    { 
+    name : "",
+    surname: "",
+    email: "",
+    age: "",
+    color: "",
+    contact : []
+  }
+  );
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [age, setAge] = useState('');
-  const [contactWith , getContactWith] = useState([]);
   const [data, setData] = useState([]);
-  //Error
-  const [errorEmail, setErrorEmail] = useState(null);
-  const [errorAge, setErrorAge] = useState(null);
-  const [errorContact, setErrorContact] = useState(null);
-  
 
+  const [errorContact , setErrorContact] = useState(null)
+
+
+  const inputs = inputsData; 
   const colors = ["red", "green", "blue", 'white', "black"];
-  const contact = ["by email", "by phone call", "via SMS"];
-  
+  const contact = contact_via;
 
-  function isValidEmail(email) {
-    const correct = /\S+@\S+\.\S+/.test(email);
-
-        if(!correct){
-
-          setErrorEmail('Email is invalid');
-        return false
-        }
-       else {
-        setErrorEmail(null);
-        return true
-      }
-    
-  }
-  
-
-  function isAge(ageIs){
+     console.log(values) 
  
-    if(ageIs >= 120){
-        setErrorAge('Age must be lower than 120')
-        return false
-    }
-    else {
-      setErrorAge(null)
-      return true
-    }
-  }
-
-  function isContact(hasContact){
-    if(hasContact.length === 0){
-
-      setErrorContact('Please select Contact Preference');
-      return false;
-    } 
-    else{
-      setErrorContact(null);
-      return true;
-    } 
-  
-  }
-
-
     const handleSubmit = (e) =>{
       e.preventDefault()
 
+      if (!values.contact.length) {
+        setErrorContact('Please select at least one Contact Preference')
+        return false
+      }
+        setErrorContact(null);
+        setData(value=> [...value, values]);
+    
+ 
 
-      if (!isValidEmail(email) || !isAge(age) || !isContact(contactWith)) {
-          return false
-     } 
-     else{
-      setData(data => [...data, 
-       {
+    } 
 
-        "firstName" : firstName,
-        "lastName": lastName,
-        "email": email,
-        "age": age,
-        "contact" : contactWith
-        }]
-        )
-      
+  const onChange = (type) => (e) => {
+    switch (type) {
+      case 'input':
         
-     }
-     
-  } 
+        setValues(prevState => ({ ...prevState, [e.target.name] : e.target.value}));
+        break;
 
+      case 'option':
+        setValues(prevState => ({ ...prevState, color: e.target.value}));
+        break;
 
+      case 'checkbox':
 
+          if(e.target.checked){
+            
+          setErrorContact(null)
+          setValues(prevState => ({...prevState,  contact : [...prevState.contact, e.target.value]   }))
+          }
+          else{
+            setValues(prevState => {
+              return {...prevState, contact : [...prevState.contact.filter(item => item !== e.target.value)]}
+            })
+          }
+        break;
 
+      default:
+        setValues({...values, [e.target.name]: e.target.value});
+    }
+  }
 
-
-
-  
+ 
 
     return(
+      <Context.Provider value={data}>
+
             <div className="container">
-              <div className="row">
+              <div className="row pt-5">
                   <div className="col-12">
                   <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                    <Form.Label>Enter your Name:</Form.Label>
-                    <Form.Control type="text" id="name" value={firstName} 
-                        onChange={e => setFirstName(e.target.value) }
-                        required
-                                  />
-                  </Form.Group>
 
+                  {
+                    inputs.map(input =>(
+                      <Input key={input.id} {...input} value={values[input.name]} onChange={onChange('input')}/>
+                    ))
+                  }
 
-                  <Form.Group>
-                    <Form.Label>Enter your Surname:</Form.Label>
-                    <Form.Control type="text" value={lastName} id="surname"
-                      onChange={e => setLastName(e.target.value) }
-                      required
-                          />
-                  </Form.Group>
-
-
-                  <Form.Group>
-                    <Form.Label>Enter your Email</Form.Label>
-                    <Form.Control type="text" id="email" value={email}
-                    onChange={e => setEmail(e.target.value) }
-                    required
-                    />
-                    {errorEmail && <span style={{color: 'red'}}>{errorEmail}</span>}
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Enter your Age</Form.Label>
-                    <Form.Control type="text" id="age" value={age}
-                    onChange={e => setAge(e.target.value) }
-                    required
-                    />
-                    {errorAge && <span style={{color: 'red'}}>{errorAge}</span>}
-                  </Form.Group>
-                  <Form.Group>
-                  <ul className="list-group">
-                      {colors.map((color , i )=> (
-                      
-                      <li
-                      className="list-group-item"
-                        key={i}
-                        name={color}
-                        id={`color-${color}`}
-                        style={{paddingLeft:"10px"}}
-                        >
-                          {color}
-                        </li>
-
-                      ) 
-                      )}
-                  </ul>
-                  </Form.Group>
-                  <Form.Group>
-                  
-                  <span>Contact Preference</span>
-                      
+                  <div className="d-flex flex-column pt-3 pb-3">
+                    
+                      <label>Select Color</label>
+                   
+                    <select className='form-control' onChange={onChange('option')}>
+                  {
+                    colors.map((option, i) =>(
+                      <option key={i} value={option}>{option}</option>
+                    ))
+                  }
+                  </select>
+                  </div>
+                 
+                    <div className='pt-3'>
+                    <label>Select Contact Preference</label>
+                    {
+                      contact.map((contact,i) =>(
+                        <>
                         
-                      {contact.map((contact , i )=> (
-                        <div className="form-check" key={i}>
-                        
-                        <input
-                          type="checkbox"
-                          name={contact}
-                          value={contact}
-                          onClick={e => getContactWith(contactWith => [contactWith == [], e.target.value])}
-                          />
-                            <Form.Label style={{paddingLeft:"10px"}}>{contact}</Form.Label>
-
-                          </div>
-                      ) 
-                      )}
-              {errorContact && <span style={{color: 'red'}}>{errorContact}</span>}
-                  </Form.Group>
-
-                  <Button variant="primary" type="submit" >
+                        <Checkbox key={i}  {...contact} onChange={onChange('checkbox')}/>
+                        </>
+                      ))
+                  }
+                    {<span className='text-danger'>{errorContact}</span>}
+                    </div>
+                 
+                  <div className="text-right">
+                  <Button variant="primary" className="btn btn-success btn-lg" type="submit" >
                     Submit
                   </Button>
-        </Form>
                   </div>
-              </div>
-              <div className='col-12'>
+                </Form>
+                  </div>
+              
+              <div className='col-12 mt-5 mb-5'>
                 {
                   data.length === 0 ? 
-                  <div className="alert alert-warning" role="alert">
-                  No data
+                  <div className="wrapper">
+                    <div className="alert alert-warning" role="alert">
+                      No data
+                  </div> 
                 </div> 
                 :
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Surname</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Age</th>
-                      <th scope="col">Contact Preference</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  {  data.map((data,i) =>(
-                     <tr key={i}>
-                        <td>{data.firstName}</td>
-                        <td>{data.lastName}</td>
-                        <td>{data.email}</td>
-                        <td>{data.age}</td>
-                        <td>{data.contact.map((contact)=>(contact))}</td>
-                        <td><Button className='btn btn-danger'>Delete</Button></td>
-                     </tr> 
-                  ))}
-                </tbody>
-                </table>
+                <Table data={{"title":Object.keys(values),"data":data}}/>
                 }
               </div>
+              </div>
             </div>
-
+      </Context.Provider>
     );
 
-
-
 }
-
 
 export default FormInfo;
