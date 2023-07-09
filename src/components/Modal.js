@@ -1,52 +1,42 @@
-import { useState, useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { Context } from './context';
+import { useContext } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import { Context } from "../App";
 
+const Dialog = ({ open, onClose, type, value }) => {
+  const [data, setData] = useContext(Context);
 
-const Dialog = (props) => {
+  const removeItem = () => {
+    setData((current) => {
+      return current.filter((data, i) => i !== value.item);
+    });
+    onClose();
+  };
 
-	const {visible, messages ,item} = props.data;
+  return (
+    <Modal show={open} onHide={onClose} backdrop="static" keyboard={false}>
+      <Modal.Header>
+        <Modal.Title>{value.messages.header}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {value.messages.title}
+        {type === "info" ? (
+          <textarea rows="10" cols="60" defaultValue={JSON.stringify(data)} />
+        ) : null}
+      </Modal.Body>
 
-	const [data, setData] = useContext(Context);
-	
-
-	const [show, setShow] = useState(visible);
-
-	const handleClose = () => setShow(false);
-
-	const removeItem = () => {
-
-		setData(data => data.filter(function(i) {
-			return i !== item
-		}))
-
-    setShow(false);
-
-	}
-
-return (
-	<Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{messages.header}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-		{messages.title}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-		  {messages.buttons.cancel}
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          {value.messages.buttons.cancel}
+        </Button>
+        {type === "info" ? null : (
+          <Button className="btn btn-danger" onClick={removeItem}>
+            {value.messages.buttons.confirm}
           </Button>
-          <Button variant="primary" onClick={removeItem}>{messages.buttons.confirm}</Button>
-        </Modal.Footer>
-      </Modal>
-  
+        )}
+      </Modal.Footer>
+    </Modal>
   );
-}
+};
 
 export default Dialog;

@@ -1,17 +1,12 @@
+const Option = (props) => {
+  const { value } = props;
 
-
-const Option = (props) =>{
-
-       const {value} = props
-
-    return(
-        <>
-        <option value={value}>{value}</option>
-        <option value={value}>{value}</option>
-        </>
-
-    )
-
-}
+  return (
+    <>
+      <option value={value}>{value}</option>
+      <option value={value}>{value}</option>
+    </>
+  );
+};
 
 export default Option;

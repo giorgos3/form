@@ -1,37 +1,37 @@
-[{
-    "id":"1",
+[
+  {
+    "id": "1",
     "type": "text",
     "name": "name",
-    "placeholder":"Enter your name",
-    "errorMessage" :"Name have to be between 3 - 16 characters and only characters A-Z",
-    "pattern":"^[a-zA-Z]{3,16}$",
-    "required" : true
+    "placeholder": "Enter your name",
+    "errorMessage": "Name have to be between 3 - 16 characters and only characters A-Z",
+    "pattern": "^[a-zA-Z]{3,16}$",
+    "required": true
   },
   {
-    "id":"2",
+    "id": "2",
     "type": "text",
     "name": "surname",
-    "placeholder":"Enter your surname",
-    "errorMessage" :"Surname have to be between 3 - 16 characters and only characters A-Z",
-    "pattern":"^[a-zA-Z]{3,16}$",
-    "required" : true
+    "placeholder": "Enter your surname",
+    "errorMessage": "Surname have to be between 3 - 16 characters and only characters A-Z",
+    "pattern": "^[a-zA-Z]{3,16}$",
+    "required": true
   },
   {
-    "id":"3",
+    "id": "3",
     "type": "email",
     "name": "email",
-    "placeholder":"Enter your email",
-    "errorMessage" :"Please enter valid email",
-    "required" : true
+    "placeholder": "Enter your email",
+    "errorMessage": "Please enter valid email",
+    "required": true
   },
   {
-    "id":"4",
+    "id": "4",
     "type": "number",
     "name": "age",
-    "placeholder":"Enter your age",
-    "errorMessage" :"The age have to be lower than 120",
-    "max":119,
-    "required" : true
+    "placeholder": "Enter your age",
+    "errorMessage": "The age have to be lower than 120",
+    "max": 119,
+    "required": true
   }
-
 ]

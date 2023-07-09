@@ -44,7 +44,7 @@ input:focus {
 }
 
 
-.error{
+span.error.text-danger{
   display: none;
 }
 
@@ -52,7 +52,7 @@ input:not(:focus):not(:placeholder-shown):invalid {
   border-color: red;
 }
 
-input:not(:focus):not(:placeholder-shown):invalid ~ .error {
+input:invalid ~ span.error.text-danger {
   display: block; 
 }
 
