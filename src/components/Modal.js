@@ -21,7 +21,7 @@ const Dialog = ({ open, onClose, type, value }) => {
       <Modal.Body>
         {value.messages.title}
         {type === "info" ? (
-          <textarea rows="10" cols="60" defaultValue={JSON.stringify(data)} />
+          <textarea rows="10" cols="60" className="mt-2 pt-2" defaultValue={JSON.stringify(data)} />
         ) : null}
       </Modal.Body>
 

@@ -1,30 +1,27 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-
-.form-group{
+.form-group {
   position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    width: 100%;
 
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
 }
 .form-check {
   display: block;
@@ -32,43 +29,31 @@ code {
   padding-left: 1.5em;
 }
 
-label{
+label {
   color: gray;
 }
-.pl-5{
+.pl-5 {
   padding-left: 5px;
 }
 
-input:focus {
-  outline: none;
-}
 
-
-span.error.text-danger{
+.error-message {
   display: none;
 }
 
-input:not(:focus):not(:placeholder-shown):invalid {
-  border-color: red;
-}
 
-input:invalid ~ span.error.text-danger {
-  display: block; 
-}
 
-input:not(:focus):not(:placeholder-shown):valid {
-  border-color: green;
+input:not(:placeholder-shown):not(:focus):invalid  ~ .error-message {
+display: block; 
 }
 
 
-
-.text-right{
+.text-right {
   text-align: right;
 }
 
-.wrapper{
+.wrapper {
   padding-top: 50px;
- 
-  text-align: center;
 
+  text-align: center;
 }

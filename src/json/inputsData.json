@@ -4,7 +4,7 @@
     "type": "text",
     "name": "name",
     "placeholder": "Enter your name",
-    "errorMessage": "Name have to be between 3 - 16 characters and only characters A-Z",
+    "errorMessage": "Name have to be between 3 - 16 characters and only characters",
     "pattern": "^[a-zA-Z]{3,16}$",
     "required": true
   },
@@ -13,7 +13,7 @@
     "type": "text",
     "name": "surname",
     "placeholder": "Enter your surname",
-    "errorMessage": "Surname have to be between 3 - 16 characters and only characters A-Z",
+    "errorMessage": "Surname have to be between 3 - 16 characters and only characters",
     "pattern": "^[a-zA-Z]{3,16}$",
     "required": true
   },

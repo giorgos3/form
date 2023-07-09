@@ -6,7 +6,7 @@ const Input = (props) => {
     <div className="form-group pt-2 pb-2">
       <label>{placeholder}</label>
       <input className="form-control" {...inputProps} onChange={onChange} />
-      <span className="error text-danger">{errorMessage}</span>
+      <span className="error-message text-danger">{errorMessage}</span>
     </div>
   );
 };

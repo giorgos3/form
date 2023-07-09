@@ -66,8 +66,7 @@ const FormInfo = () => {
         }
         break;
 
-      default:
-        setValues({ ...values, [e.target.name]: e.target.value });
+      
     }
   };
 
@@ -88,7 +87,7 @@ const FormInfo = () => {
             <div className="d-flex flex-column pt-3 pb-3">
               <label>Select Color</label>
 
-              <select className="form-control" onChange={onChange("option")}>
+              <select className="form-select" onChange={onChange("option")}>
                 {colors.map((option, i) => (
                   <option key={i} value={option}>
                     {option}
@@ -106,7 +105,7 @@ const FormInfo = () => {
                   onChange={onChange("checkbox")}
                 />
               ))}
-              {<span className="text-danger">{errorContact}</span>}
+              <span className="text-danger">{errorContact}</span>
             </div>
 
             <div className="text-right">
