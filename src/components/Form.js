@@ -35,8 +35,9 @@ const FormInfo = () => {
   };
 
   const onChange = (e) => {
+    
     const type = e.target.type;
-
+    console.log(type)
     if (type === "checkbox") {
       if (e.target.checked) {
         setErrorContact(null);
@@ -78,7 +79,7 @@ const FormInfo = () => {
             <div className="d-flex flex-column pt-3 pb-3">
               <label>Select Color</label>
 
-              <select className="form-select" onChange={onChange}>
+              <select className="form-select" name="color" onChange={onChange}>
                 {colors.map((option, i) => (
                   <option key={i} value={option}>
                     {option}

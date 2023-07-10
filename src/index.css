@@ -36,14 +36,23 @@ label {
   padding-left: 5px;
 }
 
+
+
+
+input:focus:required:invalid , input:invalid:not([value=""]){ 
+  border-color: red; box-shadow: 0 0 6px red;
+  display: block;
+}
+
+
 input[value=""]:invalid ~ .error-message {
   display: none;
 }
 
+input:valid  ~ .error-message {
+  display: none; 
+  }
 
-input:invalid  ~ .error-message {
-display: block; 
-}
 
 
 .text-right {
