@@ -36,14 +36,12 @@ label {
   padding-left: 5px;
 }
 
-
-.error-message {
+input[value=""]:invalid ~ .error-message {
   display: none;
 }
 
 
-
-input:not(:placeholder-shown):not(:focus):invalid  ~ .error-message {
+input:invalid  ~ .error-message {
 display: block; 
 }
 

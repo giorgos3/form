@@ -34,40 +34,31 @@ const FormInfo = () => {
     setData((prevState) => [...prevState, values]);
   };
 
-  const onChange = (type) => (e) => {
-    switch (type) {
-      case "input":
+  const onChange = (e) => {
+    const type = e.target.type;
+
+    if (type === "checkbox") {
+      if (e.target.checked) {
+        setErrorContact(null);
         setValues((prevState) => ({
           ...prevState,
-          [e.target.name]: e.target.value,
+          contact: [...prevState.contact, e.target.value],
         }));
-        break;
-
-      case "option":
-        setValues((prevState) => ({ ...prevState, color: e.target.value }));
-        break;
-
-      case "checkbox":
-        if (e.target.checked) {
-          setErrorContact(null);
-          setValues((prevState) => ({
+      } else {
+        setValues((prevState) => {
+          return {
             ...prevState,
-            contact: [...prevState.contact, e.target.value],
-          }));
-        } else {
-          setValues((prevState) => {
-            return {
-              ...prevState,
-              contact: [
-                ...prevState.contact.filter((item) => item !== e.target.value),
-              ],
-            };
-          });
-        }
-        break;
-
-      
+            contact: [
+              ...prevState.contact.filter((item) => item !== e.target.value),
+            ],
+          };
+        });
+      }
     }
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -80,14 +71,14 @@ const FormInfo = () => {
                 key={input.id}
                 {...input}
                 value={values[input.name]}
-                onChange={onChange("input")}
+                onChange={onChange}
               />
             ))}
 
             <div className="d-flex flex-column pt-3 pb-3">
               <label>Select Color</label>
 
-              <select className="form-select" onChange={onChange("option")}>
+              <select className="form-select" onChange={onChange}>
                 {colors.map((option, i) => (
                   <option key={i} value={option}>
                     {option}
@@ -99,11 +90,7 @@ const FormInfo = () => {
             <div className="pt-3">
               <label>Select Contact Preference</label>
               {contact.map((contact) => (
-                <Checkbox
-                  key={contact.id}
-                  {...contact}
-                  onChange={onChange("checkbox")}
-                />
+                <Checkbox key={contact.id} {...contact} onChange={onChange} />
               ))}
               <span className="text-danger">{errorContact}</span>
             </div>

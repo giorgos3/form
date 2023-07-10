@@ -4,7 +4,6 @@ const Option = (props) => {
   return (
     <>
       <option value={value}>{value}</option>
-      <option value={value}>{value}</option>
     </>
   );
 };
